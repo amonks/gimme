@@ -19,7 +19,7 @@ this.Uploader = function (config) {
     xhr.upload.addEventListener('progress', function (e) {
       if (e.lengthComputable) {
         var percentLoaded = Math.round(e.loaded / e.total * 100)
-        config.logger('<progress value="' + percentLoaded + '" max="100"></progress>')
+        config.logger('<progress value="' + percentLoaded + '" max="100">' + percentLoaded + '%</progress>')
       }
     })
     xhr.send(file)
