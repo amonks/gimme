@@ -1,0 +1,17 @@
+{
+	"name": "gimme",
+  "description": "file upload page with lambda and s3",
+  "private": true,
+  "files": [
+    "main.js"
+  ],
+  "scripts": {
+    "start": "claudia create --name gimme --region us-east-1 --handler main.handler",
+    "test": "claudia test-lambda",
+    "deploy": "claudia update"
+  },
+  "devDependencies": {
+    "claudia": "^1.x"
+  }
+}
+
