@@ -4,7 +4,7 @@ this.Uploader = function (config) {
   /*
     Function to carry out the actual PUT request to S3 using the signed request from the app.
   */
-  function upload_file (file, signed_request, url) {
+  function upload_file (file, signed_request) {
     var xhr = new XMLHttpRequest()
     xhr.open('PUT', signed_request)
     xhr.setRequestHeader('x-amz-acl', 'private')
@@ -40,7 +40,7 @@ this.Uploader = function (config) {
         if (xhr.status === 200) {
           config.logger('Uploading...')
           var response = JSON.parse(xhr.responseText)
-          upload_file(file, response.signed_request, response.url)
+          upload_file(file, response.signed_request)
         } else {
           config.logger('Could not get signed URL.')
         }

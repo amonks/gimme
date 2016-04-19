@@ -11,10 +11,20 @@ exports.handler = function (event, context) {
   console.log('event: ', event)
   // {name, type}
 
+  var gen_random_string = function rrr (n) {
+    var s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    return Array.apply(null, Array(n))
+      .map(function () {
+        return s.charAt(Math.floor(Math.random() * s.length))
+      }).join('')
+  }
+
+  var upload_key = gen_random_string(4) + '-' + event.name
+
   var s3 = new aws.S3()
   var s3_params = {
     Bucket: S3_BUCKET,
-    Key: event.name,
+    Key: upload_key,
     Expires: 60,
     ContentType: event.type,
     ACL: 'public-read'
@@ -25,8 +35,7 @@ exports.handler = function (event, context) {
       console.log(err)
     } else {
       var return_data = {
-        signed_request: data,
-        url: 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + event.name
+        signed_request: data
       }
       context.succeed(return_data)
     }
